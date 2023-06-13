@@ -4,10 +4,16 @@ import { ref, onUnmounted } from 'vue'
 import { useTableData } from '@/composables/state'
 import TableData from '@/components/TableData.vue'
 // const { socket } = useWebsocket('wss://localhost:9888/ws/5c3056d3')
-const { serviceName, dataSource, columns } = useTableData()
-const activeKey = ref('1')
-const services = ref([])
-const currentService = ref()
+const {
+  serviceName,
+  hardwareDataSource,
+  hardwareColumns,
+  processColumns,
+  processDataSource,
+} = useTableData()
+// const activeKey = ref('1')
+// const services = ref([])
+// const currentService = ref()
 
 // console.log(socket)
 
@@ -68,24 +74,23 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <a-typography>
-    <a-typography-title>{{ serviceName }} - 硬件状态信息区</a-typography-title>
-    <a-typography-paragraph>
-      <TableData :columns="columns" :dataSource="dataSource" />
-    </a-typography-paragraph>
-    <a-typography-title>{{ serviceName }} - 进程状态信息区</a-typography-title>
-    <a-typography-paragraph>
-      <TableData :columns="columns" :dataSource="dataSource" />
-    </a-typography-paragraph>
-    <!-- <a-typography-title>{{ serviceName }}</a-typography-title> -->
-    <a-typography-paragraph>
-      <div class="">
-        <!-- <ul></ul> -->
-        <span>服务器列表</span>
-        <div>参数区</div>
-      </div>
-    </a-typography-paragraph>
-  </a-typography>
-  
-
+  <a-card :title="serviceName">
+    <a-typography>
+      <a-typography-title>{{ serviceName }} - 硬件状态信息区</a-typography-title>
+      <a-typography-paragraph>
+        <TableData :columns="hardwareColumns" :dataSource="hardwareDataSource" />
+      </a-typography-paragraph>
+      <a-typography-title>{{ serviceName }} - 进程状态信息区</a-typography-title>
+      <a-typography-paragraph>
+        <TableData :columns="processColumns" :dataSource="processDataSource" />
+      </a-typography-paragraph>
+      <a-typography-paragraph>
+        <div class="">
+          <!-- <ul></ul> -->
+          <span>服务器列表</span>
+          <div>参数区</div>
+        </div>
+      </a-typography-paragraph>
+    </a-typography>
+  </a-card>
 </template>
